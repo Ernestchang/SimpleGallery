@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import it.feio.android.simplegallery.util.Display;
 import it.feio.android.simplegallery.views.TouchImageView;
@@ -54,10 +55,11 @@ public class GalleryPagerFragment extends Fragment {
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
-	 * @param imagePath
-	 */
+     *
+     * @param imagePath
+     */
     public static GalleryPagerFragment create(int pageNumber, Uri imagePath) {
-    	GalleryPagerFragment fragment = new GalleryPagerFragment();
+        GalleryPagerFragment fragment = new GalleryPagerFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNumber);
         args.putSerializable(ARG_PATH, imagePath.toString());
@@ -75,19 +77,17 @@ public class GalleryPagerFragment extends Fragment {
     @Override
     @SuppressLint("NewApi")
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         TouchImageView rootView = new TouchImageView(getActivity());
-		rootView.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
-				.LayoutParams.MATCH_PARENT));
+        rootView.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                .LayoutParams.MATCH_PARENT));
         Point dimensions = Display.getUsableSize(getActivity());
-		Glide.with(getActivity())
-				.load(mImagePath.getPath())
-				.fitCenter()
-				.crossFade()
-				.override(dimensions.x, dimensions.y)
-				.error(R.drawable.image_broken)
-				.into(rootView);
+
+        Glide.with(getActivity())
+                .load(mImagePath.getPath())
+                .apply(RequestOptions.centerCropTransform().override(dimensions.x, dimensions.y).error(R.drawable.image_broken))
+                .into(rootView);
 
         return rootView;
     }
