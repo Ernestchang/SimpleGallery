@@ -16,18 +16,20 @@
 
 package it.feio.android.simplegallery;
 
-import android.app.ActionBar;
-import android.net.Uri;
-import com.bumptech.glide.Glide;
-import it.feio.android.simplegallery.util.Display;
-import it.feio.android.simplegallery.views.TouchImageView;
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.bumptech.glide.Glide;
+
+import it.feio.android.simplegallery.util.Display;
+import it.feio.android.simplegallery.views.TouchImageView;
 
 
 public class GalleryPagerFragment extends Fragment {
@@ -80,7 +82,7 @@ public class GalleryPagerFragment extends Fragment {
 				.LayoutParams.MATCH_PARENT));
         Point dimensions = Display.getUsableSize(getActivity());
 		Glide.with(getActivity())
-				.load(mImagePath)
+				.load(mImagePath.getPath())
 				.fitCenter()
 				.crossFade()
 				.override(dimensions.x, dimensions.y)
